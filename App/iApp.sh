@@ -54,6 +54,10 @@ function createWindowMain() {
 
   /** Então, adicione a função createWindow() que carregará o arquivo index.html em uma nova instância do BrowserWindow.*/
   windowMain.loadFile('index.html');
+
+  /** Abrindo o inspetor de código para verificar possíveis erros */
+  windowMain.webContents.openDevTools();
+
 }
 
 /**No Electron, janelas do navegador só podem ser criadas após o módulo app disparar o evento ready. Você pode esperar por este evento utilizando a API app.whenReady(). Chame a função createWindow() após whenReady() resolver a Promise.*/
@@ -95,10 +99,32 @@ EOF
 }
 
 
+ADDING_STRUCTURE_INITIAL_FILE_PRELOADJS(){
+cat << EOF >> preload.js
+/**
+ *É aqui que anexar um script de pré-carregamento ao seu renderizador é útil. Um script de pré-carregamento é executado antes que o processo do renderizador seja carregado e tem acesso aos globais do renderizador (por exemplo, windowe document) e a um ambiente Node.js.
+ Resumo: Todos procedimento de lógica que você precisa para carregar a página web coloque aqui.
+ */
+window.addEventListener('DOMContentLoaded', () => {
+
+  const replaceText = (selector, text) => {
+    const element = document.getElementById(selector)
+    if (element) element.innerText = text
+  }
+
+  for (const dependency of ['chrome', 'node', 'electron']) {
+    replaceText(`${dependency}-version`, process.versions[dependency])
+  }
+})
+
+EOF
+}
+
 
 EXECUTE(){
 ADDING_STRUCTURE_INITIAL_FILE_HTML
 ADDING_STRUCTURE_INITIAL_MAINJS
+ADDING_STRUCTURE_INITIAL_FILE_PRELOADJS
 }
 
 EXECUTE

@@ -17,12 +17,17 @@ function createWindowMain() {
     }
   });
   windowMain.loadFile('index.html');
+
+  /** Abrindo o inspetor de código para verificar possíveis erros */
+  windowMain.webContents.openDevTools();
+
 }
 
 /**
  * No Electron, janelas do navegador só podem ser criadas após o módulo app disparar o evento ready. Você pode esperar por este evento utilizando a API app.whenReady(). Chame a função createWindow() após whenReady() resolver a Promise.
  */
 app.whenReady().then(createWindowMain);
+
 
 /**
  * Encerrar a aplicação quando todas as janelas estiverem fechadas (Windows e Linux)
