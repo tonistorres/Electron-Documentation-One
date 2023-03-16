@@ -3,7 +3,7 @@
 
 ![Logo](./e.png)
 
-# Curso de Electron
+# Documentando a Aplicação
 
 <p>
 <i>
