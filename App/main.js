@@ -10,6 +10,7 @@ function createWindowMain() {
     /**
      * Os scripts de pré-carregamento contêm código que é executado em um processo de renderizador antes que seu conteúdo da Web comece a ser carregado. Esses scripts são executados no contexto do renderizador, mas recebem mais privilégios por terem acesso às APIs do Node.js.
       Um script de pré-carregamento pode ser anexado ao processo principal na opção BrowserWindowdo construtor webPreferences.
+      Para anexar esse script ao processo do renderizador, passe o caminho para o script de pré-carregamento para a webPreferences.preloadopção no BrowserWindowconstrutor existente.
      * */
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
